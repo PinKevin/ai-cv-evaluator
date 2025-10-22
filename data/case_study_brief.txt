@@ -1,0 +1,33 @@
+Case Study Brief
+
+Objective: Build a backend service that automates the initial screening of a job application. The service will receive a candidate's CV and a project report, evaluate them against a specific job description and this case study brief, and produce a structured, Al-generated evaluation report.
+
+Inputs:
+- Candidate CV (PDF)
+- Project Report (PDF)
+
+Reference Documents ("Ground Truth"):
+- Job Description (for CV evaluation)
+- Case Study Brief (this document, for Project Report evaluation)
+- Scoring Rubric (separate documents for CV and Project)
+
+Deliverables:
+1. Backend Service (API endpoints):
+   - POST /upload: Accepts CV and Report PDFs, stores them, returns IDs.
+   - POST /evaluate: Triggers async AI pipeline. Receives job title, CV ID, Report ID. Immediately returns job ID and "queued" status.
+   - GET /result/{id}: Retrieves evaluation status ("queued", "processing", "completed") and final JSON result if completed.
+2. Evaluation Pipeline (Triggered by POST /evaluate):
+   - RAG: Ingest reference docs into a vector DB. Retrieve relevant sections for prompts.
+   - LLM Chaining:
+     - CV Eval: Parse CV, use RAG (JD, CV Rubric), call LLM for cv_match_rate & cv_feedback.
+     - Project Report Eval: Parse Report, use RAG (Brief, Project Rubric), call LLM for project_score & project_feedback.
+     - Final Analysis: Synthesize previous outputs into overall_summary via LLM.
+   - Async Handling: /evaluate must not block. Use job queue.
+   - Error Handling: Handle edge cases, LLM API failures (timeouts, rate limits) with retries/back-off. Control LLM randomness (temperature).
+
+Requirements:
+- Any backend framework.
+- Proper LLM service (OpenAI, Gemini, OpenRouter - free options available).
+- Simple vector DB (ChromaDB, Qdrant) or RAG-as-a-service.
+- README with setup instructions and design choices.
+- Include reference documents and ingestion scripts.
