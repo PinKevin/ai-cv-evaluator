@@ -2,6 +2,10 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Document } from './document.entity';
 import { Repository } from 'typeorm';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
+import { EvaluateDto } from './dto/evaluate.dto';
+import { EvaluationStatus } from 'src/evaluation/evaluation.entity';
 
 type UploadedFiles = {
   cv?: Express.Multer.File[];
@@ -13,6 +17,9 @@ export class DocumentService {
   constructor(
     @InjectRepository(Document)
     private documentRepository: Repository<Document>,
+
+    @InjectQueue('evaluation-queue')
+    private evaluationQueue: Queue,
   ) {}
 
   async uploadAndSaveDocument(files: UploadedFiles) {
@@ -37,6 +44,17 @@ export class DocumentService {
       message: 'Files successfully uploaded.',
       cv: { id: savedCv.id },
       report: { id: savedReport.id },
+    };
+  }
+
+  async startEvaluation(evaluateDto: EvaluateDto) {
+    const job = await this.evaluationQueue.add('evaluate-task', {
+      ...evaluateDto,
+    });
+
+    return {
+      id: job.id,
+      status: EvaluationStatus.queued,
     };
   }
 

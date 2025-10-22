@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Post,
   UploadedFiles,
@@ -6,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { DocumentService } from './document.service';
+import { EvaluateDto } from './dto/evaluate.dto';
 
 @Controller()
 export class DocumentController {
@@ -26,5 +28,10 @@ export class DocumentController {
     },
   ) {
     return this.documentService.uploadAndSaveDocument(files);
+  }
+
+  @Post('evaluate')
+  async evaluate(@Body() evaluateDto: EvaluateDto) {
+    return this.documentService.startEvaluation(evaluateDto);
   }
 }

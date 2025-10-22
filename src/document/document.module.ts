@@ -6,6 +6,7 @@ import { DocumentController } from './document.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [
@@ -21,6 +22,9 @@ import { extname } from 'path';
           cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
+    }),
+    BullModule.registerQueue({
+      name: 'evaluation-queue',
     }),
   ],
   providers: [DocumentService],
