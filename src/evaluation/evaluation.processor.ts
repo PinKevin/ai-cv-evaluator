@@ -273,6 +273,7 @@ export class EvaluationProcessor extends WorkerHost {
       model: model,
       messages: [{ role: 'user', content: prompt }],
       response_format: { type: 'json_object' },
+      temperature: 0.2,
     };
 
     try {

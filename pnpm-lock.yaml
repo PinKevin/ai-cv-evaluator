@@ -11,9 +11,6 @@ importers:
       '@llamaindex/huggingface':
         specifier: ^0.1.30
         version: 0.1.30(@huggingface/transformers@3.7.6)(@llamaindex/core@0.6.22(@huggingface/transformers@3.7.6))(@llamaindex/env@0.1.30(@huggingface/transformers@3.7.6))(zod@4.1.12)
-      '@llamaindex/openai':
-        specifier: ^0.4.20
-        version: 0.4.20(@llamaindex/core@0.6.22(@huggingface/transformers@3.7.6))(@llamaindex/env@0.1.30(@huggingface/transformers@3.7.6))(zod@4.1.12)
       '@llamaindex/readers':
         specifier: ^3.1.21
         version: 3.1.21(@llamaindex/core@0.6.22(@huggingface/transformers@3.7.6))(@llamaindex/env@0.1.30(@huggingface/transformers@3.7.6))

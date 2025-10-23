@@ -48,9 +48,19 @@ export class DocumentService {
   }
 
   async startEvaluation(evaluateDto: EvaluateDto) {
-    const job = await this.evaluationQueue.add('evaluate-task', {
-      ...evaluateDto,
-    });
+    const job = await this.evaluationQueue.add(
+      'evaluate-task',
+      {
+        ...evaluateDto,
+      },
+      {
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 5000,
+        },
+      },
+    );
 
     return {
       id: job.id,
