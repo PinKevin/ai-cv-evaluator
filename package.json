@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@huggingface/transformers": "^3.7.6",
     "@llamaindex/chroma": "^0.0.36",
     "@llamaindex/huggingface": "^0.1.30",
     "@llamaindex/readers": "^3.1.21",
@@ -36,6 +37,7 @@
     "class-validator": "^0.14.2",
     "dotenv": "^17.2.3",
     "llamaindex": "^0.12.0",
+    "onnxruntime-node": "^1.23.0",
     "pdf-parse": "^2.4.4",
     "pg": "^8.16.3",
     "postgres": "^3.4.7",

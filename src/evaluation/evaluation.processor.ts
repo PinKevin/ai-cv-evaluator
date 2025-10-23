@@ -47,6 +47,8 @@ export class EvaluationProcessor extends WorkerHost {
   ) {
     super();
 
+    process.env.TRANSFORMERS_BACKEND = 'onnxruntime-node';
+
     Settings.embedModel = new HuggingFaceEmbedding({
       modelType: 'BAAI/bge-small-en-v1.5',
     });

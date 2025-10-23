@@ -10,6 +10,8 @@ import { config } from 'dotenv';
 
 config();
 
+process.env.TRANSFORMERS_BACKEND = 'onnxruntime-node';
+
 async function main() {
   console.log('🚀 Starting data ingestion...');
 
